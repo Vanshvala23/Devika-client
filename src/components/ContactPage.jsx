@@ -53,9 +53,15 @@ const ContactPage = () => {
           
           {/* Left: Google Map */}
           <div className="lg:w-1/2 h-[400px] lg:h-auto bg-gray-300 relative">
-             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.273359102402!2d70.81892846848872!3d22.305499191408128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959b6075966c0a9%3A0x715c5a8b28c93342!2sUnisoft%20Pheripherials!5e0!3m2!1sen!2sin!4v1771303556826!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+             <iframe 
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.273359102402!2d70.81892846848872!3d22.305499191408128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959b6075966c0a9%3A0x715c5a8b28c93342!2sUnisoft%20Pheripherials!5e0!3m2!1sen!2sin!4v1771304625304!5m2!1sen!2sin"
+               width="100%" 
+               height="100%" 
+               style={{border:0}} 
+               allowFullScreen="" 
+               loading="lazy"
                title="Devika Industries Location"
-               className="absolute inset-0 transition duration-700"
+               className="absolute inset-0 grayscale hover:grayscale-0 transition duration-700"
              ></iframe>
           </div>
 
