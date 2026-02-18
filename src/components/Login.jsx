@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
+import image from "../assets/logo.jpeg";
 import axios from "axios";
 
 const Login = () => {
@@ -34,7 +35,7 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
         
         <div className="text-center">
-          <img className="mx-auto h-12 w-auto" src="src\assets\logo.jpeg" alt="Devika Industries" />
+          <img className="mx-auto h-12 w-auto" src={image} alt="Devika Industries" />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Welcome Back</h2>
           <p className="mt-2 text-sm text-gray-600">
             Sign in to manage your orders
