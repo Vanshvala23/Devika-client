@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Lock, ArrowRight } from 'lucide-react';
+import image from "../assets/logo.jpeg";
 import axios from "axios";
 const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -32,7 +33,7 @@ const Signup = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
         <div className="text-center">
-          <img className="mx-auto h-12 w-auto" src="src\assets\logo.jpeg" alt="Devika Industries" />
+          <img className="mx-auto h-12 w-auto" src={image} alt="Devika Industries" />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Create Account</h2>
         </div>
 
