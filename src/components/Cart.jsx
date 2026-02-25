@@ -16,7 +16,6 @@ const Cart = () => {
         />
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
         <p className="text-gray-500 mb-6">Looks like you haven't added any machinery yet.</p>
-
         <Link
           to="/"
           className="bg-[#FF5722] text-white px-8 py-3 rounded-sm font-bold uppercase hover:bg-orange-700 transition"
@@ -36,70 +35,80 @@ const Cart = () => {
 
           {/* LEFT */}
           <div className="lg:col-span-2 space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={item._id}
-                className="bg-white p-6 rounded-sm shadow-sm flex flex-col md:flex-row gap-6 items-start"
-              >
-                {/* Image */}
-                <div className="w-full md:w-32 h-32 bg-gray-50 flex items-center justify-center border">
-                  <img
-                    src={item.product?.image}
-                    alt={item.product?.name}
-                    className="w-full h-full object-contain p-2"
-                  />
-                </div>
+            {cartItems.map((item) => {
 
-                {/* Details */}
-                <div className="flex-grow">
-                  <div className="flex justify-between">
-                    <h3 className="text-lg font-bold hover:text-[#FF5722]">
-                      <Link to={`/product/${item.product?._id}`}>
-                        {item.product?.name}
-                      </Link>
-                    </h3>
+              // ✅ Fix: use images array instead of image
+              const imageSrc =
+                Array.isArray(item.product?.images) && item.product.images.length > 0
+                  ? item.product.images[0]
+                  : "/no-image.png";
 
-                    <p className="text-xl font-bold">
-                      ₹{(item.product?.price * item.quantity).toLocaleString()}
-                    </p>
+              const price = Number(item.product?.price) || 0;
+              const quantity = Number(item.quantity) || 1;
+
+              return (
+                <div
+                  key={item._id}
+                  className="bg-white p-6 rounded-sm shadow-sm flex flex-col md:flex-row gap-6 items-start"
+                >
+                  {/* Image */}
+                  <div className="w-full md:w-32 h-32 bg-gray-50 flex items-center justify-center border shrink-0">
+                    <img
+                      src={imageSrc}
+                      alt={item.product?.name}
+                      className="w-full h-full object-contain p-2"
+                      onError={(e) => { e.target.src = "/no-image.png"; }}
+                    />
                   </div>
 
-                  <p className="text-green-600 text-sm mt-1">In Stock</p>
-                  <p className="text-gray-500 text-xs mt-1">Sold by Devika Industries</p>
-
-                  {/* Controls */}
-                  <div className="flex items-center gap-6 mt-6">
-                    {/* Qty */}
-                    <div className="flex border rounded overflow-hidden">
-                      <button
-                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                        disabled={item.quantity <= 1}
-                        className="p-2 hover:bg-gray-100"
-                      >
-                        <Minus size={16} />
-                      </button>
-
-                      <span className="px-4 font-bold">{item.quantity}</span>
-
-                      <button
-                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                        className="p-2 hover:bg-gray-100"
-                      >
-                        <Plus size={16} />
-                      </button>
+                  {/* Details */}
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start gap-4">
+                      <h3 className="text-lg font-bold hover:text-[#FF5722]">
+                        <Link to={`/product/${item.product?._id}`}>
+                          {item.product?.name}
+                        </Link>
+                      </h3>
+                      <p className="text-xl font-bold shrink-0">
+                        ₹{(price * quantity).toLocaleString()}
+                      </p>
                     </div>
 
-                    {/* Remove */}
-                    <button
-                      onClick={() => removeFromCart(item._id)}
-                      className="text-[#FF5722] text-sm hover:underline flex gap-1"
-                    >
-                      <Trash2 size={16} /> Remove
-                    </button>
+                    <p className="text-green-600 text-sm mt-1">In Stock</p>
+                    <p className="text-gray-500 text-xs mt-1">Sold by Devika Industries</p>
+
+                    {/* Controls */}
+                    <div className="flex items-center gap-6 mt-6">
+                      {/* Qty */}
+                      <div className="flex border rounded overflow-hidden">
+                        <button
+                          onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                          disabled={item.quantity <= 1}
+                          className="p-2 hover:bg-gray-100 disabled:opacity-40"
+                        >
+                          <Minus size={16} />
+                        </button>
+                        <span className="px-4 font-bold flex items-center">{quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                          className="p-2 hover:bg-gray-100"
+                        >
+                          <Plus size={16} />
+                        </button>
+                      </div>
+
+                      {/* Remove */}
+                      <button
+                        onClick={() => removeFromCart(item._id)}
+                        className="text-[#FF5722] text-sm hover:underline flex items-center gap-1"
+                      >
+                        <Trash2 size={16} /> Remove
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* RIGHT */}

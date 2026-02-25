@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Star,
@@ -10,10 +10,13 @@ import {
   Check,
 } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -27,7 +30,6 @@ const ProductDetails = () => {
         const res = await axios.get(
           `https://devika-backend.vercel.app/api/products/${id}`
         );
-
         console.log("PRODUCT:", res.data);
         setProduct(res.data);
       } catch (err) {
@@ -39,6 +41,23 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [id]);
+
+  // ✅ Auth guard
+  const handleAddToCart = () => {
+    if (!user) {
+      navigate("/login", { state: { from: `/product/${id}` } });
+      return;
+    }
+    addToCart(product._id);
+  };
+
+  const handleBuyNow = () => {
+    if (!user) {
+      navigate("/login", { state: { from: `/product/${id}` } });
+      return;
+    }
+    navigate("/checkout", { state: { product, quantity } });
+  };
 
   if (loading)
     return <div className="p-20 text-center">Loading...</div>;
@@ -124,23 +143,39 @@ const ProductDetails = () => {
 
               <select
                 value={quantity}
-                onChange={(e) =>
-                  setQuantity(Number(e.target.value))
-                }
+                onChange={(e) => setQuantity(Number(e.target.value))}
                 className="w-full border p-2 mb-4"
               >
-                {[1,2,3,4,5].map(n => (
+                {[1, 2, 3, 4, 5].map((n) => (
                   <option key={n}>{n}</option>
                 ))}
               </select>
 
-              <button onClick={() => addToCart(product._id)}>
-  Add to Cart
-</button>
-
-              <button className="w-full bg-orange-500 text-white py-3">
-                Buy Now
+              {/* ✅ Add to Cart — redirects to login if not logged in */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full border-2 border-orange-500 text-orange-500 font-bold py-3 mb-3 hover:bg-orange-50 transition"
+              >
+                {user ? "Add to Cart" : "Login to Add to Cart"}
               </button>
+
+              {/* ✅ Buy Now — redirects to login if not logged in */}
+              <button
+                onClick={handleBuyNow}
+                className="w-full bg-orange-500 text-white py-3 font-bold hover:bg-orange-700 transition"
+              >
+                {user ? "Buy Now" : "Login to Buy"}
+              </button>
+
+              {/* ✅ Login nudge */}
+              {!user && (
+                <p className="text-xs text-center text-gray-400 mt-3">
+                  <Link to="/login" className="text-[#FF5722] font-semibold hover:underline">
+                    Sign in
+                  </Link>{" "}
+                  to place orders
+                </p>
+              )}
 
             </div>
           </div>
