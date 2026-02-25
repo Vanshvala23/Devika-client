@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Lock, ArrowRight, Building2, Hash, Briefcase, Phone, MapPin } from 'lucide-react';
-import image from "../assets/logo.jpeg";
+import image from "../assets/logo.png";
 import axios from "axios";
 
 // ✅ Country codes with max digit lengths
@@ -173,7 +173,7 @@ const Signup = () => {
 
         {/* Header */}
         <div className="text-center">
-          <img className="mx-auto h-12 w-auto" src={image} alt="Devika Industries" />
+         <img className="mx-auto h-32 md:h-30 w-auto object-contain" src={image} alt="Devika Industries" />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Create Account</h2>
         </div>
 

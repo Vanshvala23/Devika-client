@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 // Ensure your logo is at this exact path: src/assets/logo.jpeg
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo.png';
 
 const Header = () => {
   const { cartCount } = useCart();
@@ -37,9 +37,9 @@ const Header = () => {
         </button>
 
         {/* 2. LOGO (Centered on mobile, Left on desktop) */}
-        <Link to="/" className="flex items-center">
-          <img src={logo} alt="Devika Industries" className="h-16 object-contain" />
-        </Link>
+       <Link to="/" className="flex items-center">
+  <img src={logo} alt="Devika Industries" className="h-32 md:h-30 lg:h-30 w-auto object-contain position-relative" />
+</Link>
 
         {/* 3. RIGHT ACTIONS (Socials, Auth, Cart) */}
         <div className="flex items-center gap-4">
